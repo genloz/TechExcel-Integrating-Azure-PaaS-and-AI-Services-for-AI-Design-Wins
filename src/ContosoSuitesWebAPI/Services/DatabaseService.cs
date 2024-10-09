@@ -1,11 +1,11 @@
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+using Microsoft.SemanticKernel.ChatCompletion;
 using System.Runtime.CompilerServices;
 using Microsoft.Data.SqlClient;
 using ContosoSuitesWebAPI.Entities;
 using Microsoft.SemanticKernel;
 using System.ComponentModel;
-using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Connectors.OpenAI;
-using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace ContosoSuitesWebAPI.Services;
 
