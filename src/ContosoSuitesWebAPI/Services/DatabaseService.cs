@@ -3,11 +3,16 @@ using Microsoft.Data.SqlClient;
 using ContosoSuitesWebAPI.Entities;
 using Microsoft.SemanticKernel;
 using System.ComponentModel;
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace ContosoSuitesWebAPI.Services;
 
 public class DatabaseService : IDatabaseService
 {
+    [KernelFunction]
+    [Description("Get all hotels.")]
     public async Task<IEnumerable<Hotel>> GetHotels()
     {
         var sql = "SELECT HotelID, HotelName, City, Country FROM dbo.Hotel";
@@ -33,6 +38,8 @@ public class DatabaseService : IDatabaseService
         return hotels;
     }
 
+    [KernelFunction]
+    [Description("Get all bookings for a single hotel.")]
     public async Task<IEnumerable<Booking>> GetBookingsForHotel(int hotelId)
     {
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID";
@@ -61,6 +68,8 @@ public class DatabaseService : IDatabaseService
         return bookings;
     }
 
+    [KernelFunction]
+    [Description("Get all bookings for missing hotel rooms.")]
     public async Task<IEnumerable<Booking>> GetBookingsMissingHotelRooms()
     {
         var sql = """
@@ -104,6 +113,8 @@ public class DatabaseService : IDatabaseService
         return bookings;
     }
 
+    [KernelFunction]
+    [Description("Get all bookings for multiple hotel rooms.")]
     public async Task<IEnumerable<Booking>> GetBookingsWithMultipleHotelRooms()
     {
         var sql = """
@@ -147,6 +158,8 @@ public class DatabaseService : IDatabaseService
         return bookings;
     }
 
+    [KernelFunction]
+    [Description("Get all bookings by hotel and minimum date.")]
     public async Task<IEnumerable<Booking>> GetBookingsByHotelAndMinimumDate(int hotelId, DateTime dt)
     {
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID AND StayBeginDate >= @StayBeginDate";
